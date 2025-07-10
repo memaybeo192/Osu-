@@ -4,8 +4,8 @@
 #include <map>
 
 struct NoteKey {
-    POINT relativePos;    // Tọa độ lane (tính từ góc trên-trái của scan region)
-    int virtualKey;       // VK_S, VK_D, ...
+    POINT relativePos;
+    int virtualKey;
     bool isHolding = false;
 
     std::chrono::steady_clock::time_point lastPressTime;
@@ -16,6 +16,9 @@ struct NoteKey {
     bool isNoteIncoming = false;
     bool isIncomingNoteHoldCandidate = false;
 
+    int holdFrameLossCount = 0;
+    static constexpr int MAX_HOLD_FRAME_LOSS = 2; // Giữ 2 để xem nốt hold có nhả sớm không.
+
     NoteKey(POINT pos, int vk)
       : relativePos(pos), virtualKey(vk)
     {
@@ -24,10 +27,10 @@ struct NoteKey {
     }
 };
 
-// Khởi tạo 4 lane S D J K
 static std::map<char, NoteKey> keyMap = {
-    { 'S', NoteKey{{ 88, 268 }, 0x53} },
-    { 'D', NoteKey{{240, 268 }, 0x44} },
-    { 'J', NoteKey{{382, 268 }, 0x4A} },
-    { 'K', NoteKey{{531, 268 }, 0x4B} }
+    // Giá trị Y này là BASE_Y, OFFSET_Y sẽ được cộng vào trong botstate.h
+    { 'S', NoteKey{{ 79, 830 }, 0x53} },
+    { 'D', NoteKey{{235, 830 }, 0x44} },
+    { 'J', NoteKey{{380, 830 }, 0x4A} },
+    { 'K', NoteKey{{535, 830 }, 0x4B} }
 };
