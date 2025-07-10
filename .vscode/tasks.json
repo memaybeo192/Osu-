@@ -1,0 +1,22 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build-osu-bot",
+      "type": "shell",
+      "command": "g++",
+      "args": [
+        "-g",
+        "-std=c++17",
+        "*.cpp",
+        "-o",
+        "osu_mania_bot.exe",
+        "-lgdi32",
+        "-luser32",
+        "-lwinmm"
+      ],
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": ["$gcc"]
+    }
+  ]
+}
